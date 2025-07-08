@@ -15,25 +15,130 @@ A comprehensive Python script for real-time object detection and tracking using 
 
 ## Installation
 
-### Basic Requirements
+### Step 1: Clone or Download
 
 ```bash
-pip install ultralytics opencv-python numpy torch torchvision
+# If using git
+git clone <repository-url>
+cd yolo-tracking
+
+# Or download the files directly
 ```
 
-### GPU Support (Optional)
+### Step 2: Create Virtual Environment (Recommended)
+
+```bash
+# Create virtual environment
+python -m venv yolo-env
+
+# Activate virtual environment
+# On Windows:
+yolo-env\Scripts\activate
+# On macOS/Linux:
+source yolo-env/bin/activate
+```
+
+### Step 3: Install Dependencies
+
+#### Option A: Using requirements.txt (Recommended)
+
+```bash
+pip install -r requirements.txt
+```
+
+#### Option B: Manual Installation
+
+```bash
+# Core dependencies
+pip install ultralytics>=8.0.0
+pip install opencv-python>=4.5.0
+pip install numpy>=1.21.0
+pip install torch>=1.9.0
+pip install torchvision>=0.10.0
+pip install Pillow>=8.3.0
+
+# Additional dependencies
+pip install matplotlib seaborn pandas scipy
+pip install imageio imageio-ffmpeg
+pip install psutil tqdm pyyaml
+```
+
+### Step 4: GPU Support (Optional but Recommended)
 
 #### NVIDIA GPU (CUDA)
 ```bash
-# Install CUDA version of PyTorch for NVIDIA GPU acceleration
+# Uninstall CPU version first
+pip uninstall torch torchvision torchaudio
+
+# Install CUDA version (adjust CUDA version as needed)
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Verify CUDA installation
+python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
 ```
 
-#### Apple Silicon (M Series)
+#### Apple Silicon (M1/M2/M3)
 ```bash
 # PyTorch with MPS support is included in the default installation
-# No additional packages needed for Apple Silicon
+# Verify MPS availability
+python -c "import torch; print(f'MPS available: {torch.backends.mps.is_available()}')"
 ```
+
+### Step 5: Verify Installation
+
+```bash
+# Test the installation
+python yolo_tracker.py --list-models
+
+# Quick test with default camera
+python yolo_tracker.py --source 0 --inference-fps 5
+```
+
+### System Requirements
+
+#### Minimum Requirements
+- Python 3.8 or higher
+- 4GB RAM
+- 2GB free disk space
+- Webcam or video files for testing
+
+#### Recommended Requirements
+- Python 3.9 or higher
+- 8GB+ RAM
+- GPU with 4GB+ VRAM (NVIDIA) or Apple Silicon
+- 5GB+ free disk space (for models and outputs)
+
+### Troubleshooting Installation
+
+#### Common Issues
+
+1. **Python version compatibility**:
+   ```bash
+   python --version  # Should be 3.8+
+   ```
+
+2. **Permission errors**:
+   ```bash
+   # Use --user flag if needed
+   pip install --user -r requirements.txt
+   ```
+
+3. **CUDA installation issues**:
+   ```bash
+   # Check NVIDIA driver
+   nvidia-smi
+   
+   # Check CUDA toolkit version
+   nvcc --version
+   ```
+
+4. **Package conflicts**:
+   ```bash
+   # Create fresh environment
+   conda create -n yolo python=3.9
+   conda activate yolo
+   pip install -r requirements.txt
+   ```
 
 ## Quick Start
 
